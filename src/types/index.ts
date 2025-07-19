@@ -3,29 +3,16 @@ export interface User {
   name: string;
   email: string;
   phone: string;
+  role: 'service_consumer' | 'vehicle_owner' | 'material_supplier';
   isAuthenticated: boolean;
   address?: string;
+  district?: string;
+  businessName?: string;
+  businessType?: string;
+  experience?: string;
+  description?: string;
   bio?: string;
   profileImage?: string;
-}
-
-export interface MaterialItem {
-  id: string;
-  name: string;
-  description: string;
-  category: string;
-  pricePerUnit: number;
-  unit: string;
-  image: string;
-  available: boolean;
-  supplier: {
-    name: string;
-    location: string;
-    district: string;
-    phone: string;
-    rating: number;
-    totalOrders: number;
-  };
 }
 
 export interface Vehicle {
@@ -48,6 +35,25 @@ export interface Vehicle {
   };
 }
 
+export interface MaterialItem {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  pricePerUnit: number;
+  unit: string;
+  image: string;
+  available: boolean;
+  supplier: {
+    name: string;
+    location: string;
+    district: string;
+    phone: string;
+    rating: number;
+    totalOrders: number;
+  };
+}
+
 export interface ServiceRequest {
   id: string;
   userId: string;
@@ -62,98 +68,4 @@ export interface ServiceRequest {
   requiredDate: string;
   address: string;
   notes?: string;
-}
-
-export interface Partner {
-  id: string;
-  type: 'vehicle_owner' | 'material_supplier';
-  businessName: string;
-  ownerName: string;
-  email: string;
-  phone: string;
-  address: string;
-  district: string;
-  businessLicense: string;
-  brNumber: string;
-  yearsInBusiness: number;
-  description: string;
-  services: string[];
-  certifications: string[];
-  insuranceDetails: {
-    provider: string;
-    policyNumber: string;
-    expiryDate: string;
-  };
-  documents: {
-    businessLicense: File | null;
-    insurance: File | null;
-    brCertificate: File | null;
-    vehiclePhotos?: File[];
-  };
-  status: 'pending' | 'approved' | 'rejected' | 'suspended';
-  registrationDate: string;
-  approvalDate?: string;
-  rating: number;
-  totalJobs: number;
-  notifications: Notification[];
-}
-
-export interface Notification {
-  id: string;
-  type: 'contact_request' | 'inquiry' | 'booking_request';
-  from: {
-    name: string;
-    phone: string;
-    email: string;
-    profileImage?: string;
-  };
-  message: string;
-  itemName: string;
-  itemType: 'material' | 'vehicle';
-  timestamp: string;
-  read: boolean;
-}
-
-export interface PartnerVehicle {
-  id: string;
-  partnerId: string;
-  name: string;
-  type: string;
-  model: string;
-  year: number;
-  description: string;
-  pricePerHour: number;
-  pricePerDay: number;
-  specifications: string[];
-  images: string[];
-  available: boolean;
-  location: string;
-  insuranceDetails: {
-    provider: string;
-    policyNumber: string;
-    expiryDate: string;
-  };
-  maintenanceRecords: {
-    lastService: string;
-    nextService: string;
-    certifications: string[];
-  };
-  status: 'active' | 'maintenance' | 'inactive';
-}
-
-export interface PartnerMaterial {
-  id: string;
-  partnerId: string;
-  name: string;
-  category: string;
-  description: string;
-  pricePerUnit: number;
-  unit: string;
-  minimumOrder: number;
-  availableQuantity: number;
-  images: string[];
-  qualityCertifications: string[];
-  deliveryAreas: string[];
-  deliveryTimeframe: string;
-  status: 'active' | 'out_of_stock' | 'inactive';
 }

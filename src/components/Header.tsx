@@ -1,38 +1,39 @@
 import React from 'react';
-import { Menu, X, Phone, Truck } from 'lucide-react';
+import { Menu, X, Phone, Truck, User, LogOut, Home, MessageCircle, Info } from 'lucide-react';
 import { User as UserType } from '../types';
-import { ProfileDropdown } from './ProfileDropdown';
 
-type ViewType = 'home' | 'services' | 'materials' | 'vehicles' | 'about' | 'contact';
+type ViewType = 'home' | 'vehicles' | 'materials' | 'about' | 'contact' | 'signup' | 'dashboard' | 'profile';
 
 interface HeaderProps {
   user: UserType | null;
-  onAuthClick?: () => void;
-  onLogout?: () => void;
-  onUpdateProfile?: (userData: Partial<UserType>) => void;
-  onMenuClick: () => void;
+  onNavigation: (view: ViewType) => void;
+  onLogout: () => void;
   isMenuOpen: boolean;
+  onMenuToggle: () => void;
   currentView: ViewType;
-  onNavigate: (view: ViewType) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ 
   user, 
-  onAuthClick, 
+  onNavigation, 
   onLogout,
-  onUpdateProfile,
-  onMenuClick, 
   isMenuOpen, 
-  currentView, 
-  onNavigate 
+  onMenuToggle, 
+  currentView 
 }) => {
-  const navItems = [
+  const guestNavItems = [
     { id: 'home', label: 'Home' },
-    { id: 'services', label: 'Services' },
-    { id: 'materials', label: 'Materials' },
     { id: 'vehicles', label: 'Vehicles' },
-    { id: 'about', label: 'About' },
-    { id: 'contact', label: 'Contact' }
+    { id: 'materials', label: 'Materials' },
+    { id: 'about', label: 'About Us' },
+    { id: 'contact', label: 'Contact Us' },
+    { id: 'signup', label: 'Sign Up' }
+  ];
+
+  const userNavItems = [
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'contact', label: 'Contact Us', icon: MessageCircle },
+    { id: 'about', label: 'About Us', icon: Info }
   ];
 
   return (
@@ -46,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <Phone className="w-4 h-4 mr-2" />
                 <span>24/7 Support: +94 76 1098385</span>
               </div>
-              <span className="hidden md:block">Free delivery on orders over $500</span>
+              <span className="hidden md:block">Island-wide service coverage</span>
             </div>
             <div className="flex items-center space-x-4">
               <span>Follow us:</span>
@@ -69,7 +70,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center">
               <button 
-                onClick={() => onNavigate('home')}
+                onClick={() => onNavigation('home')}
                 className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
               >
                 <div className="bg-gradient-to-br from-yellow-400 to-yellow-500 p-3 rounded-xl shadow-lg">
@@ -77,66 +78,98 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
                 <div>
                   <h1 className="text-2xl font-bold text-gray-900">Auto X</h1>
-                  <p className="text-xs text-gray-500">Construction Solutions</p>
+                  <p className="text-xs text-gray-500">Heavy Vehicle & Material Platform</p>
                 </div>
               </button>
             </div>
             
-            <nav className="hidden lg:flex space-x-8">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => onNavigate(item.id as ViewType)}
-                  className={`text-gray-700 hover:text-yellow-600 transition-colors font-medium py-2 border-b-2 border-transparent hover:border-yellow-500 ${
-                    currentView === item.id ? 'text-yellow-600 border-yellow-500' : ''
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </nav>
+            {!user ? (
+              // Guest Navigation
+              <>
+                <nav className="hidden lg:flex space-x-8">
+                  {guestNavItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => onNavigation(item.id as ViewType)}
+                      className={`text-gray-700 hover:text-yellow-600 transition-colors font-medium py-2 border-b-2 border-transparent hover:border-yellow-500 ${
+                        currentView === item.id ? 'text-yellow-600 border-yellow-500' : ''
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </nav>
 
-            <div className="flex items-center space-x-4">
-              {user ? (
-                <ProfileDropdown 
-                  user={user} 
-                  onLogout={onLogout || (() => {})} 
-                  onUpdateProfile={onUpdateProfile || (() => {})} 
-                />
-              ) : (
                 <button
-                  onClick={onAuthClick}
+                  onClick={onMenuToggle}
+                  className="lg:hidden text-gray-700 hover:text-orange-500 p-2"
+                >
+                  {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+              </>
+            ) : (
+              // Logged-in User Navigation
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={() => onNavigation('profile')}
                   className="flex items-center space-x-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-3 rounded-xl hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl"
                 >
-                  <span>Sign In</span>
+                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                    <User size={16} className="text-yellow-600" />
+                  </div>
+                  <span>{user.name.split(' ')[0]}</span>
                 </button>
-              )}
-              
-              <button
-                onClick={onMenuClick}
-                className="lg:hidden text-gray-700 hover:text-orange-500 p-2"
-              >
-                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
+                
+                <button
+                  onClick={onMenuToggle}
+                  className="text-gray-700 hover:text-orange-500 p-2"
+                >
+                  {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+              </div>
+            )}
           </div>
         </div>
         
-        {/* Mobile Menu */}
+        {/* Mobile/User Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden bg-white border-t border-gray-100 shadow-lg">
+          <div className="bg-white border-t border-gray-100 shadow-lg">
             <div className="px-4 py-4 space-y-3">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => onNavigate(item.id as ViewType)}
-                  className={`block w-full text-left px-4 py-3 text-gray-700 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg font-medium transition-colors ${
-                    currentView === item.id ? 'text-yellow-600 bg-yellow-50' : ''
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
+              {!user ? (
+                // Guest Mobile Menu
+                guestNavItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => onNavigation(item.id as ViewType)}
+                    className={`block w-full text-left px-4 py-3 text-gray-700 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg font-medium transition-colors ${
+                      currentView === item.id ? 'text-yellow-600 bg-yellow-50' : ''
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))
+              ) : (
+                // User Menu
+                <>
+                  {userNavItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => onNavigation(item.id as ViewType)}
+                      className="flex items-center w-full text-left px-4 py-3 text-gray-700 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg font-medium transition-colors"
+                    >
+                      <item.icon size={20} className="mr-3" />
+                      {item.label}
+                    </button>
+                  ))}
+                  <button
+                    onClick={onLogout}
+                    className="flex items-center w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg font-medium transition-colors"
+                  >
+                    <LogOut size={20} className="mr-3" />
+                    Logout
+                  </button>
+                </>
+              )}
             </div>
           </div>
         )}
