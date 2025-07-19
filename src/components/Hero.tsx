@@ -1,14 +1,20 @@
 import React from 'react';
-import { Truck, Package, Users, Star, CheckCircle, ArrowRight, Play, Shield, Clock, Award, Phone, Mail, MapPin } from 'lucide-react';
+import { Truck, Package, Users, Star, CheckCircle, ArrowRight, Shield, Clock, Award, Phone, Mail, MapPin, Search } from 'lucide-react';
 
 interface HeroProps {
   onServiceSelect: (service: 'materials' | 'vehicles') => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
+  const handleRestrictedAccess = () => {
+    // This will trigger the auth modal in the parent component
+    // Since this is a guest page, any service access should require login
+    alert('Please sign up or log in to access our services');
+  };
+
   return (
     <>
-      {/* Main Hero Banner */}
+      {/* Hero Banner */}
       <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 py-20 overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="absolute inset-0">
@@ -39,8 +45,8 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
                 <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <button className="group border-2 border-white text-white px-10 py-4 rounded-xl text-lg font-bold hover:bg-white hover:text-blue-900 transition-all duration-300 flex items-center">
-                <Play className="mr-3 w-5 h-5" />
-                Watch Demo
+                Learn More
+                <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
             
@@ -67,11 +73,84 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
         </div>
       </section>
 
-      {/* User Types Section */}
+      {/* Service Summary */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">
+              Our Services
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Comprehensive construction solutions for all your project needs
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div 
+              onClick={handleRestrictedAccess}
+              className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-yellow-200 cursor-pointer"
+            >
+              <div className="text-center">
+                <div className="bg-yellow-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Truck className="text-yellow-600 w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Vehicle Rental</h3>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  Rent heavy vehicles like JCBs, excavators, lorries, and cranes with professional operators.
+                </p>
+                <div className="flex items-center text-yellow-600 font-semibold group-hover:text-yellow-700">
+                  Explore Vehicles
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                </div>
+              </div>
+            </div>
+
+            <div 
+              onClick={handleRestrictedAccess}
+              className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-blue-200 cursor-pointer"
+            >
+              <div className="text-center">
+                <div className="bg-blue-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Package className="text-blue-600 w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Material Supply</h3>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  Source quality construction materials like sand, gravel, soil, bricks, and steel from verified suppliers.
+                </p>
+                <div className="flex items-center text-blue-600 font-semibold group-hover:text-blue-700">
+                  Explore Materials
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                </div>
+              </div>
+            </div>
+
+            <div 
+              onClick={handleRestrictedAccess}
+              className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-green-200 cursor-pointer"
+            >
+              <div className="text-center">
+                <div className="bg-green-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Search className="text-green-600 w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Find Services</h3>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  Connect with verified vehicle owners and material suppliers across all 25 districts in Sri Lanka.
+                </p>
+                <div className="flex items-center text-green-600 font-semibold group-hover:text-green-700">
+                  Start Searching
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* User Roles Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">
               Who Can Join Auto X?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -80,14 +159,14 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* Customers */}
-            <div className="group bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-blue-200">
+            {/* Service Seekers */}
+            <div className="group bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl p-8 border border-blue-200 hover:shadow-2xl transition-all duration-500">
               <div className="text-center">
-                <div className="bg-blue-100 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Users className="text-blue-600 w-10 h-10" />
+                <div className="bg-blue-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Users className="text-white w-10 h-10" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Customers</h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Service Seekers</h3>
+                <p className="text-gray-700 leading-relaxed mb-6">
                   Construction companies, contractors, and builders looking for reliable vehicles and quality materials for their projects.
                 </p>
                 
@@ -111,20 +190,20 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
                 </div>
 
                 <button className="w-full bg-blue-500 text-white py-3 px-6 rounded-xl hover:bg-blue-600 transition-colors font-semibold">
-                  Join as Customer
+                  Join as Service Seeker
                 </button>
               </div>
             </div>
 
             {/* Vehicle Renters */}
-            <div className="group bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-yellow-200">
+            <div className="group bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-3xl p-8 border border-yellow-200 hover:shadow-2xl transition-all duration-500">
               <div className="text-center">
-                <div className="bg-yellow-100 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Truck className="text-yellow-600 w-10 h-10" />
+                <div className="bg-yellow-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Truck className="text-white w-10 h-10" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Vehicle Owners</h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Own heavy vehicles like JCBs, excavators, lorries, or cranes? Rent them out and earn passive income through our platform.
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Vehicle Renters</h3>
+                <p className="text-gray-700 leading-relaxed mb-6">
+                  Own heavy vehicles like JCBs, excavators, lorries, or cranes? List them for rent and earn passive income through our platform.
                 </p>
                 
                 <div className="space-y-3 mb-8">
@@ -146,20 +225,20 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
                   </div>
                 </div>
 
-                <button className="w-full bg-yellow-400 text-black py-3 px-6 rounded-xl hover:bg-yellow-500 transition-colors font-semibold">
-                  Become Vehicle Owner
+                <button className="w-full bg-yellow-500 text-white py-3 px-6 rounded-xl hover:bg-yellow-600 transition-colors font-semibold">
+                  Become Vehicle Renter
                 </button>
               </div>
             </div>
 
             {/* Material Suppliers */}
-            <div className="group bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-green-200">
+            <div className="group bg-gradient-to-br from-green-50 to-green-100 rounded-3xl p-8 border border-green-200 hover:shadow-2xl transition-all duration-500">
               <div className="text-center">
-                <div className="bg-green-100 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Package className="text-green-600 w-10 h-10" />
+                <div className="bg-green-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Package className="text-white w-10 h-10" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Material Suppliers</h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
+                <p className="text-gray-700 leading-relaxed mb-6">
                   Supply sand, gravel, soil, bricks, and other construction materials. Connect with contractors across Sri Lanka.
                 </p>
                 
@@ -191,8 +270,8 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
         </div>
       </section>
 
-      {/* About the Service */}
-      <section className="py-20 bg-white">
+      {/* Why Choose Us */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -257,52 +336,6 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">
-              How Auto X Works
-            </h2>
-            <p className="text-xl text-gray-600">
-              Simple steps to connect, transact, and succeed
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="bg-blue-500 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
-                1
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Sign Up & Verify</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Create your account and complete verification. Choose your role as customer, vehicle owner, or material supplier.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="bg-yellow-500 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
-                2
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Connect & Browse</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Browse available vehicles and materials, or list your own. Connect directly with verified partners in your area.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
-                3
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Negotiate & Complete</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Negotiate terms directly with partners. Complete transactions safely with our support and build lasting business relationships.
-              </p>
             </div>
           </div>
         </div>
@@ -384,7 +417,7 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Final CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-900 to-blue-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
@@ -400,75 +433,8 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
               Sign Up Now
             </button>
             <button className="border-2 border-white text-white px-12 py-4 rounded-xl text-lg font-bold hover:bg-white hover:text-blue-900 transition-colors">
-              Learn More
+              Login
             </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section className="py-16 bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="bg-yellow-400 p-3 rounded-xl">
-                  <Truck className="w-8 h-8 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold">Auto X</h3>
-                  <p className="text-gray-400">Construction Solutions</p>
-                </div>
-              </div>
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                Connecting construction professionals across Sri Lanka. 
-                Building the future of construction commerce, one connection at a time.
-              </p>
-              <div className="flex space-x-4">
-                <div className="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center hover:bg-yellow-500 cursor-pointer transition-colors">
-                  <span className="text-white font-bold">f</span>
-                </div>
-                <div className="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center hover:bg-yellow-500 cursor-pointer transition-colors">
-                  <span className="text-white font-bold">t</span>
-                </div>
-                <div className="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center hover:bg-yellow-500 cursor-pointer transition-colors">
-                  <span className="text-white font-bold">in</span>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-lg font-bold mb-4">Contact Info</h4>
-              <div className="space-y-3 text-gray-300">
-                <div className="flex items-center">
-                  <Phone className="w-4 h-4 mr-3" />
-                  <span>+94 76 1098385</span>
-                </div>
-                <div className="flex items-center">
-                  <Mail className="w-4 h-4 mr-3" />
-                  <span>info@autox.lk</span>
-                </div>
-                <div className="flex items-center">
-                  <MapPin className="w-4 h-4 mr-3" />
-                  <span>Colombo, Sri Lanka</span>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-lg font-bold mb-4">Quick Links</h4>
-              <div className="space-y-2 text-gray-300">
-                <div className="hover:text-yellow-400 cursor-pointer transition-colors">About Us</div>
-                <div className="hover:text-yellow-400 cursor-pointer transition-colors">How It Works</div>
-                <div className="hover:text-yellow-400 cursor-pointer transition-colors">Support</div>
-                <div className="hover:text-yellow-400 cursor-pointer transition-colors">Terms & Conditions</div>
-                <div className="hover:text-yellow-400 cursor-pointer transition-colors">Privacy Policy</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 Auto X. All rights reserved. Built for Sri Lankan construction professionals.</p>
           </div>
         </div>
       </section>
